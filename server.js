@@ -73,7 +73,8 @@ app.get('/leagues', async (req, res) => {
         console.error(err);
     });
 
-    for(let i = 0; i < 10; i++) {
+    console.log("League IDS: " + idList.length);
+    for(let i = 0; i < idList.length; i++) {
         await getDraftResults(idList[i]).then((resp) => {
             // console.log(resp.data.draftResults.draftUnit);
             if(resp.data.draftResults.draftUnit.draftPick !== undefined) {
