@@ -82,21 +82,23 @@ app.get('/leagues', async (req, res) => {
     });
 
     console.log("League IDS: " + idList.length);
-    for(let i = 0; i < idList.length; i++) {
+    const count = 10;
+    for(let i = (count * 30); i < 310; i++) {
         await getDraftResults(idList[i]).then((resp) => {
-            // console.log(resp.data.draftResults.draftUnit);
             if (resp.data.draftResults.draftUnit.draftPick !== undefined) {
                 if (resp.data.draftResults.draftUnit.draftPick[0].timestamp > 1588309200) {
                     if(resp.data.draftResults.draftUnit.draftPick.length > 50) {
                         draftResult = draftResult.concat(resp.data.draftResults.draftUnit.draftPick);
-                        console.log("Good ID:", idList[i]);
+                        console.log("LEAGUE:", idList[i]);
                     } else {
-                        console.log("ROOKIE DRAFT: " + resp.data.draftResults.draftUnit.draftPick.length);
+                        console.log("ROOKIE DRAFT: " + resp.data.draftResults.draftUnit.draftPick.length + " -> " + idList[i]);
                     }
+                } else {
+                    console.log("DRAFT BEFORE MAY 1");
                 }
 
             } else {
-                console.log("Empty Draft: ", resp.data.draftResults.draftUnit.draftPick);
+                console.log("EMPTY DRAFT: ", resp.data.draftResults.draftUnit.draftPick);
             }
         }).catch((err) => {
             console.error(err);
